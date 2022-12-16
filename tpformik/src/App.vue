@@ -1,26 +1,49 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
+<script setup>
+import FormVue from './components/Form.vue';
+import { reactive } from 'vue';
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const initialValues = reactive({
+    name: '',
+    email: '',
+    password: '',
+});
+
+const onSubmit = (values) => {
+    console.log("onSubmit : ", values);
+};
+
+const validate = (values) => {
+    console.log("validate : ", values);
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<template>
+<div id="app">
+    <FormVue
+    :initialValues="initialValues"
+    :onSubmit="onSubmit"
+    :validate="validate"
+    >
+        <template #default="{ values, errors, handleSubmit, setValueChange }">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" v-model="values.name" @change="setValueChange" />
+                <p v-if="errors"> erreur signalé.</p>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" v-model="values.email" @change="setValueChange" />
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password" v-model="values.password" @change="setValueChange" />
+            </div>
+            <div>
+                <button type="submit" @click="handleSubmit">Submit</button>
+            </div>
+        </template>
+    </FormVue>
+</div>
+</template>
+
