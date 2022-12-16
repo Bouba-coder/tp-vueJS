@@ -1,5 +1,7 @@
 <script setup>
 import FormVue from './components/Form.vue';
+import Field from './components/Field.vue';
+
 import { reactive } from 'vue';
 
 
@@ -19,31 +21,16 @@ const validate = (values) => {
 </script>
 
 <template>
-<div id="app">
-    <FormVue
-    :initialValues="initialValues"
-    :onSubmit="onSubmit"
-    :validate="validate"
-    >
-        <template #default="{ values, errors, handleSubmit, setValueChange }">
+  <div id="app"> TP vueJS </div>
+    <FormVue :initialValues="initialValues" :onSubmit="onSubmit" :validate="validate">
+        <template #default="{ values, handleSubmit, setValueChange }">
             <div>
-                <label for="name">Name</label>
-                <input type="text" name="name" v-model="values.name" @change="setValueChange" />
-                <p v-if="errors"> erreur signalé.</p>
-            </div>
-            <div>
-                <label for="email">Email</label>
-                <input type="email" name="email" v-model="values.email" @change="setValueChange" />
-            </div>
-            <div>
-                <label for="password">Password</label>
-                <input type="password" name="password" v-model="values.password" @change="setValueChange" />
-            </div>
-            <div>
-                <button type="submit" @click="handleSubmit">Submit</button>
+                <Field name="name" as="input" type="text" :value="values.name" @input="setValueChange" />
+                <Field name="email" as="input" type="email" :value="values.email" @input="setValueChange" />
+                <Field name="password" as="input" type="password" :value="values.password" @input="setValueChange" />
+                <button @click="handleSubmit">Submit</button>
             </div>
         </template>
     </FormVue>
-</div>
 </template>
 
